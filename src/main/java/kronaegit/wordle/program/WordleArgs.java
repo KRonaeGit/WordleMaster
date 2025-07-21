@@ -1,5 +1,7 @@
 package kronaegit.wordle.program;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -8,9 +10,9 @@ public class WordleArgs {
     public int wordLength = 5;
     public int maxChance = 6;
     public File wordlistFile = null;
-    public File wordlistDir = new File("wordlist");
+    public File wordlistDir = null;
 
-    public static WordleArgs parse(String[] args) throws IllegalArgumentException, IOException {
+    public static @NotNull WordleArgs parse(String[] args) throws IllegalArgumentException, IOException {
         WordleArgs config = new WordleArgs();
         Iterator<String> it = Arrays.asList(args).iterator();
 
@@ -65,6 +67,9 @@ public class WordleArgs {
             }
         }
 
+        if(config.wordlistFile == null && config.wordlistDir == null) {
+            config.wordlistDir = new File("wordlist");
+        }
         return config;
     }
 
